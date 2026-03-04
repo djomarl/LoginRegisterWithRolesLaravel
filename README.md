@@ -1,45 +1,70 @@
 # Laravel Examen Template - Role-Based Auth & CRUD Ready
 
-Dit project is een solide basis voor ons examen. Het bevat al een volledig werkend inlog- en registratiesysteem met rollen (Beheerder/Gebruiker), zodat we direct kunnen beginnen met de specifieke CRUD-eisen van het examen.
+Dit project dient als basis voor ons examen. Het bevat een volledig werkend inlog- en registratiesysteem met rollen, zodat we direct kunnen focussen op de CRUD-eisen van de opdracht.
 
-## 📋 Wat zit er in dit template?
-
-* **Authenticatie:** Registreren en inloggen op basis van `username` in plaats van e-mail.
+## 📋 Kenmerken & Inhoud
+* **Authenticatie:** Registreren en inloggen op basis van `username`.
 * **Role-Based Access Control (RBAC):**
-    * **Beheerder:** Heeft toegang tot alle onderdelen.
-    * **Gebruiker:** Heeft beperkte toegang.
-* **Middleware:** Een aangepaste `CheckRole` middleware die routes beveiligt op basis van de rol in de database.
-* **Dashboards:** Gescheiden views voor Beheerders en Gebruikers.
-* **Vite & Tailwind:** De frontend is al geconfigureerd voor styling.
+    * `Beheerder`: Volledige toegang tot alle onderdelen.
+    * `Gebruiker`: Beperkte toegang tot specifieke dashboards.
+* **Middleware:** Beveiliging via de `CheckRole` middleware.
+* **Frontend:** Klaar voor gebruik met Tailwind CSS en Vite.
 
 ---
 
-## 🚀 Installatie Handleiding
+## 🛠️ Installatie & Setup
 
 Volg deze stappen om het project op jouw laptop werkend te krijgen:
 
 1.  **Clone de repository:**
     ```bash
-    git clone [LINK_NAAR_DEZE_REPO]
+    git clone [REPO_URL]
     cd LoginRegisterWithRolesLaravel
     ```
 
-2.  **Voer het setup-script uit:**
-    Ik heb een speciaal script toegevoegd in `composer.json` dat alles in één keer regelt (installeren, .env aanmaken, key genereren, migraties):
+2.  **Voer het automatische setup-script uit:**
+    In de `composer.json` is een script toegevoegd dat alle installatiestappen (pakketten, .env, app-key) in één keer regelt:
     ```bash
     composer run setup
     ```
 
 3.  **Start de applicatie:**
-    Open twee terminals:
-    * Terminal 1 (PHP server): `php artisan serve`
-    * Terminal 2 (Frontend/Vite): `npm run dev`
+    Open twee terminals (of gebruik `composer run dev` als je alles in één terminal wilt zien):
+    * Terminal 1: `php artisan serve`
+    * Terminal 2: `npm run dev`
 
 ---
 
-## 🛠️ Hoe we dit gebruiken tijdens het examen
+## 🗄️ Database: SQLite
 
-### 1. Nieuwe CRUD's toevoegen
-Wanneer we horen wat we moeten maken (bijv. "Producten" of "Bestellingen"), maken we simpelweg een model, migratie en controller aan:
+Voor dit examen gebruiken we **SQLite**. Dit is een database die in één bestand leeft (`database/database.sqlite`). Dit bespaart ons tijd omdat we geen MySQL-server (zoals XAMPP) hoeven te configureren.
+
+**Hoe werkt het?**
+* **Configuratie:** In je `.env` staat `DB_CONNECTION=sqlite`. De rest van de `DB_` regels zijn niet nodig.
+* **Bestand aanmaken:** Als de database nog niet bestaat, maak hem aan met:
+    ```bash
+    touch database/database.sqlite
+    ```
+* **Migreren:** Voer `php artisan migrate` uit om de tabellen aan te maken.
+
+---
+
+## 🤝 Samenwerken via GitHub (Tips)
+
+Om te voorkomen dat we elkaars werk overschrijven, spreken we het volgende af:
+
+1.  **Branches:** Werk niet direct in `main`. Maak voor elke nieuwe feature een branch aan:
+    ```bash
+    git checkout -b feature/naam-van-onderdeel
+    ```
+2.  **Pull Before Push:** Doe altijd een `git pull` voordat je begint te werken, zodat je de laatste versie van de ander hebt.
+3.  **Database:** Het `.sqlite` bestand staat in de `.gitignore`. Dit betekent dat je lokaal je eigen testdata hebt. Als we de tabelstructuur aanpassen, pushen we alleen de **Migration** bestanden. Na een pull moet je dan even `php artisan migrate` draaien.
+
+---
+
+## 🚀 Hoe we verder bouwen tijdens het examen
+
+### Nieuwe CRUD maken
+Horen we dat we "Producten" moeten beheren? Voer dit uit:
 ```bash
 php artisan make:model Product -mcr
