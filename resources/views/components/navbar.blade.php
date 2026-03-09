@@ -11,21 +11,21 @@
             <div class="hidden sm:flex sm:items-center sm:space-x-4">
                 
                 @guest
-                <a href="#" class="text-slate-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                <a href="/" class="{{ request()->is('/') ? 'text-indigo-600 bg-indigo-50' : 'text-slate-600 hover:text-indigo-600' }} px-3 py-2 rounded-md text-sm font-medium transition-colors">
                     Home
                 </a>
                 @endguest
 
 
-                {{-- Role based --}}
+                {{-- Role gebaseerde navs --}}
                 @auth
                     @if (Auth::user()->role === 'Beheerder')
-                        <a href="/beheerder/dashboard" class="text-slate-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        <a href="/beheerder/dashboard" class="{{ request()->is('beheerder/dashboard*') ? 'text-indigo-600 bg-indigo-50' : 'text-slate-600 hover:text-indigo-600' }} px-3 py-2 rounded-md text-sm font-medium transition-colors">
                             Beheerder Dashboard
                         </a>
                         
                     @elseif (Auth::user()->role === 'Gebruiker')
-                        <a href="/gebruiker/dashboard" class="text-slate-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        <a href="/gebruiker/dashboard" class="{{ request()->is('gebruiker/dashboard*') ? 'text-indigo-600 bg-indigo-50' : 'text-slate-600 hover:text-indigo-600' }} px-3 py-2 rounded-md text-sm font-medium transition-colors">
                             Mijn Dashboard
                         </a>
                     @endif
@@ -34,8 +34,6 @@
                 <div class="border-l border-slate-200 h-6 mx-2"></div>
                 
                     @auth
-
-                      
                     <div class="text-slate-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                         Welkom, {{ Auth::user()->name }}!
                     </div>
@@ -45,7 +43,7 @@
                         <x-button variant="danger" type="submit">Logout</x-button>
                         </form>
                     @else
-                        <a href="{{ route('login') }}" class="text-slate-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                        <a href="{{ route('login') }}" class="{{ request()->routeIs('login') ? 'text-indigo-600 bg-indigo-50' : 'text-slate-600 hover:text-indigo-600' }} px-3 py-2 rounded-md text-sm font-medium transition-colors">
                             Log in
                         </a>
 
